@@ -35,22 +35,30 @@
 #
 class Job < ApplicationRecord
   extend FriendlyId
-  friendly_id :title, use: :slugged
+
+  friendly_id :slug_candidates, use: [:slugged, :finders]
+
+
   belongs_to :user
   has_rich_text :description
   has_rich_text :company_description
   has_one_attached :company_logo
 
-  JOB_STATUSES ={
-    pending: 'pending',
-    published: 'pending',
-    archived: 'archived'
-  }.freeze
-  end
+  scope :desc, -> { order(created_at: :desc) }
+  scope :pending, -> { where(status: JOB_STATUSES[:pending]) }
+  scope :published, -> { where(status: JOB_STATUSES[:published]) }
+  scope :archived, -> { where(status: JOB_STATUSES[:archived]) }
 
-  COMPENSATION_RANGE = [
+
+  JOB_STATUSES = {
+      pending: "pending",
+      published: "published",
+      archived: "archived"
+    }.freeze
+
+  COMPENSATION_TYPE = [
     "Contract",
-    "Full-Time" 
+    "Full-Time"
 ]
 
 
@@ -73,7 +81,7 @@ class Job < ApplicationRecord
     "8",
     "9",
     "10 or More"
-].freeze
+  ].freeze
 
   COMPENSATION_RANGE = [
     "50,000 - 60,000",
@@ -105,10 +113,16 @@ class Job < ApplicationRecord
     self.status == Job::JOB_STATUSES[:archived]
   end
 
-def should_generate_new_friendly_id?
-  if !slug?
-    title_change?
-  else
-    false
+  def slug_candidates
+    [:title, [:title, :company_name]]
   end
+
+  def should_generate_new_friendly_id?
+    if !slug?
+      title_changed?
+    else
+      false
+    end
+  end
+
 end
