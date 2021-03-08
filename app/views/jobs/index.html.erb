@@ -1,46 +1,19 @@
-<p id="notice"><%= notice %></p>
+<% content_for :hero do %>
+<div class="py-24 bg-red-500 text-white mb-16">
+  <div class="container flex flex-wrap justify-center mx-auto text-center">
+    <h1 class="text-4xl font-black leading-tight"> Content for Ruby on Rails </h1>
+    <p class="w-full text-lg text-red-100"> The number one resources for Ruby on Rails Developer </p>
 
-<h1>Jobs</h1>
+    <div class="flex items-center mt-6 mb-3">
+    <%= link_to "Find a developer", "#", class: "btn btn-white btn-outline lg:mr-2" %>
+    <%= link_to "Find a job", jobs_path(anchor: 'jobs-index'), class: "btn btn-green btn-outline lg:ml-2" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Link to apply</th>
-      <th>Description</th>
-      <th>Company name</th>
-      <th>Company website</th>
-      <th>Company description</th>
-      <th>Role tye</th>
-      <th>Compensation range</th>
-      <th>Remote</th>
-      <th>Years of experience</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    </div>
+    <p class="w-full"> or find a developer in the <%= link_to "comunity", "#", class: "underline" %> </p>
+  </div>
+</div>
+<% end %>
 
-  <tbody>
-    <% @jobs.each do |job| %>
-      <tr>
-        <td><%= job.title %></td>
-        <td><%= job.link_to_apply %></td>
-        <td><%= job.description %></td>
-        <td><%= job.company_name %></td>
-        <td><%= job.company_website %></td>
-        <td><%= job.company_description %></td>
-        <td><%= job.compensation_range %></td>
-        <td><%= job.remote %></td>
-        <td><%= job.years_of_experience %></td>
-        <td><%= job.user_id %></td>
-        <td><%= link_to 'Show', job %></td>
-        <td><%= link_to 'Edit', edit_job_path(job) %></td>
-        <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Job', new_job_path %>
+    <div class="container px-4 mx-auto lg:px-48">
+    <%= render @jobs %>
+    </div>
