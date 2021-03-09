@@ -17,7 +17,7 @@
 }
 
 .label {
-  @apply block text-gray-700 text-sm font-bold mb-2;
+  @apply inline-block text-gray-700 text-sm font-bold mb-2;
 }
 
 .select {
@@ -153,4 +153,10 @@
       @apply bg-gray-100 border-gray-500;
     }
   }
+}
+
+
+span.required{
+  @apply h-1 w-1 rounded-full bg-red-500 inline-block relative;
+  top: -6px;
 }
